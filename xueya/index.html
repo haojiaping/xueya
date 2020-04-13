@@ -1,0 +1,648 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <!-- <link href="./bootstrap.css"/> -->
+    <link rel="stylesheet" href="./demo.css">
+    <!-- <link rel="stylesheet"    href="./laydate.css>"> -->
+    <!-- <link rel="stylesheet" href="https://unpkg.com/element-ui/lib/theme-chalk/index.css"> -->
+    <!-- <link href="./skin/jedate.css " />
+    <link href="./skin/green.css " />
+    <link href="./skin/gray.css " /> -->
+    
+    <link href="./paging.css">
+</head>
+
+<body>
+    <div class="wrapper">
+        <header>
+            <div class="logo">
+               
+                <span class="du">后</span>
+                <span class="yi">台</span>
+                <span class="jiao">管</span>
+                <span class="yu">理</span>
+            </div>
+            <div class="btn">
+                <span></span>
+                <span></span>
+                <span></span>
+            </div>
+             <!-- <div class="drop-list">
+                <ul>
+                    <li class="s-list list-item student-list" data-id="student-list">
+                        数据列表
+                    </li>
+                    <li class="s-add list-item student-add" data-id="student-add">
+                        新增数据
+                    </li>
+                    <li class="s-add list-item danxiangtu-echarts" data-id="danxiangtu-echarts">单项图</li>
+                    <li class="s-add list-item zaotu-echarts" data-id="zaotu-echarts">早图</li>
+                    <li class="s-add list-item wantu-echarts" data-id="wantu-echarts">晚图</li>
+                    <li class="s-add list-item zhuzhuangtu-echarts" data-id="zhuzhuangtu-echarts">柱状图</li>
+                    <li class="s-add list-item student-echarts" data-id="student-echarts">一周分时图</li>
+                    
+                </ul>  
+            </div> -->
+        </header>
+        <div class="left-menu">
+            <div class="list">
+                <h2 class="title disabled">数据管理</h2>
+                <ul class="list-group" id="list-group">
+                    <li class="s-add list-item student-add" data-id="student-add">
+                        新增数值
+                    </li>
+                    <li class="s-list list-item student-list" id="list-trigger" data-id="student-list">
+                        数值列表
+                    </li>
+                    <li class="s-add list-item baifenbi-echarts" data-id="baifenbi-echarts">区间列表</li>
+                    <li class="s-add list-item gaodiya-echarts" data-id="gaodiya-echarts">高低压列表</li>
+                    
+                   
+                   
+                    <!-- <li class="s-add list-item yichangbaifenbi-echarts" data-id="yichangbaifenbi-echarts">百分比图</li> -->
+                  
+                </ul>
+                <h2 class="title disabled">图表管理</h2>
+                <ul class="list-group" id="list-group2">
+                    
+                    <li class="s-add list-item danxiangtu-echarts" data-id="danxiangtu-echarts">单项图</li>
+                    <li class="s-add list-item zaotu-echarts" data-id="zaotu-echarts">早图</li>
+                    <li class="s-add list-item wantu-echarts" data-id="wantu-echarts">晚图</li>
+                    <li class="s-add list-item zhuzhuangtu-echarts" data-id="zhuzhuangtu-echarts">柱状图</li>
+                    <li class="s-add list-item zhuzhuangtuhuizong-echarts" data-id="zhuzhuangtuhuizong-echarts">柱状图汇总</li>
+                    <li class="s-add list-item student-echarts" data-id="student-echarts">一周分时图</li>
+                </ul>
+            </div>
+        </div>
+        <div class="right-content">
+            
+          
+            <div class="tab-content-item s-list" id="student-list">
+            
+                <div id="test15">
+                    <label class="col-md-1 control-label left">查询时间: </label>
+                    <div class="col-md-2">
+                        <input type="text" class="form-control " name="orderStartTime" id="starttime1"
+                        onclick="laydate({istime: true, format: 'YYYY-MM-DD'})"
+                        >
+                    </div>
+                    <!-- <div class="col-md-1" style="text-align: center">
+                        <h4>--</h4>
+                    </div>
+                    <div class="col-md-2">
+                        <input type="text" class="form-control datepickerTwo" name="orderEndTime" id="endtime1">
+                    </div> -->
+                    <button id="test">查询</button>
+                    <!-- <button id="jest">跳转图形页面</button> -->
+                </div>
+                <table id="students-table" border="0" cellspacing="0" cellpadding="0" class="table table-bordered">
+                    <thead>
+                        <tr>
+                            <th>时间</th>
+                            <th>高压</th>
+                            <th>低压</th>
+                            <th>心率</th>
+                            <!-- <th>高压最大值</th>
+                            <th>高压最小值</th>
+                            <th>高压中间值</th>
+                            <th>低压最大值</th>
+                            <th>低压最小值</th>
+                            <th>低压中间值</th> -->
+                            
+                            <th>操作</th>
+                        </tr>
+                    </thead>
+                    <tbody id="table-body"></tbody>
+                </table>
+                <div id="page" class="pager"></div>
+
+                <!-- 编辑弹出框 -->
+                <div class="modal" id="modal" style="display:none">
+                    <div class="modal-content" id="modal-content">
+                        <div class="title">
+                            <h4>编辑信息</h4>
+                        </div>
+                        <form id="edit-form">
+                            <div class="form-con">
+                             
+                                <div class="item">
+                                    <label for="highPressure2">高压：</label>
+                                    <input id="highPressure2" name="highPressure2" type="text" class="text">
+                                </div>
+                            
+                                <div class="item">
+                                    <label for="lowPressure2">低压：</label>
+                                    <input id="lowPressure2" name="lowPressure2" class="text" type="text">
+                                </div>
+                                <div class="item">
+                                    <label for="heartRate2">心率：</label>
+                                    <input id="heartRate2" name="heartRate2" class="text" type="text">
+                                </div>
+                            
+                                <div class="btn item">
+                                    <input type="submit" value="提交" class="submit" id="submit">
+                                   
+                                    <button id="reset" class="reset">关闭</button>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+
+                </div> 
+
+                <!-- 删除弹框 -->
+                <div class="del-modal" style="display:none">
+                    <div class="con">
+                        <p>是否确认删除此条数据?</p>
+                        <div class="btn">
+                            <button class="sure-btn">确认</button>
+                            <button class="reset-btn">取消</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="tab-content-item s-list" id="gaodiya-echarts">
+            
+                <div id="test18">
+                    <label class="col-md-1 control-label left">查询时间: </label>
+                    <div class="col-md-2">
+                        <input type="text" class="form-control " name="orderStartTime" id="starttime20"
+                        onclick="laydate({istime: true, format: 'YYYY-MM-DD'})"
+                        >
+                    </div>
+                  
+                    <button id="test20">查询</button>
+                    <!-- <button id="jest">跳转图形页面</button> -->
+                </div>
+                <table id="students-table" border="0" cellspacing="0" cellpadding="0" class="table table-bordered">
+                    <thead>
+                        <tr>
+                            
+                            <!-- <th>时间</th> -->
+                            <th>时间</th>
+                            <th>高压最大值</th>
+                            <th>高压最小值</th>
+                            <th>高压中间值</th>
+                            <th>低压最大值</th>
+                            <th>低压最小值</th>
+                            <th>低压中间值</th>
+                            <th>心率最大值</th>
+                            <th>心率最小值</th>
+                            <th>心率中间值</th>
+                            <!-- <th>时间</th> -->
+                            <!-- <th>操作</th> -->
+                        </tr>
+                    </thead>
+                    <tbody id="table-body20"></tbody>
+                </table>
+                
+
+        
+              
+            </div>
+            
+           
+            <div class="tab-content-item s-add show-list" id="student-add">
+                <form id="test">
+                    <div class="highPressure">
+                        <label for="highPressure">高压</label>
+                            <input type="text" name="highPressure">
+                    </div>
+                    <div class="lowPressure">
+                        <label for="lowPressure">低压</label>
+                        <input type="number" name="lowPressure">
+                    </div>
+                    <div class="heartRate">
+                        <label for="heartRate">心率</label>
+                        <input type="text" name="heartRate">
+                    </div>
+                    <div class="crTime">
+                        <label for="createTime">时间</label>
+                        <input type="text" class="form-control  text " name="createTime" id="createTime"
+                        onclick="laydate({istime: true, format: 'YYYY-MM-DD hh:mm'})"
+                        >
+                    </div>
+                </form>
+                <button id="sub-btn">提交</button>
+                <button id="add1">扩展</button>
+                <button id="shanjian">删减</button>
+            </div>
+            <div class="tab-content-item echarts " id="danxiangtu-echarts">
+                <div id="test12">
+                    <label class="col-md-1 control-label left">查询时间: </label>
+                    <div class="col-md-2">
+                        <input type="text" class="form-control " name="orderStartTime" id="starttimedanxiangtu"
+                        onclick="laydate({istime: true, format: 'YYYY-MM-DD'})"
+                        >
+                    </div>
+                    <div class="col-md-1" style="text-align: center">
+                        <h4>--</h4>
+                    </div>
+                    <div class="col-md-2">
+                        <input type="text" class="form-control " name="orderEndTime" id="endtimedanxiangtu"
+                        onclick="laydate({istime: true, format: 'YYYY-MM-DD'})"
+                        >
+                    </div>
+                    <button id="test3">查询</button>
+                    
+                </div>
+              
+                
+               
+              
+                <h4>高压最大值</h4>
+                <div class="gaoyazuida"></div>
+                <h4>高压最小值</h4>
+                <div class="gaoyazuixiao"></div>
+                <h4>高压中间值</h4>
+                <div class="gaoyazhongjian"></div>
+                <h4>低压最大值</h4>
+                <div class="diyazuida"></div>
+                <h4>低压最小值</h4>
+                <div class="diyazuixiao"></div>
+                <h4>低压中间值</h4>
+                <div class="diyazhongjian"></div>
+                <h4>心率最大值</h4>
+                <div class="xinlvzuida"></div>
+                <h4>心率最小值</h4>
+                <div class="xinlvzuixiao"></div>
+                <h4>心率中间值</h4>
+                <div class="xinlvzhongjian"></div>
+            </div>
+                
+                <div class="tab-content-item echarts" id="zhuzhuangtu-echarts">
+                    <div id="test13">
+                        <label class="col-md-1 control-label left">查询时间: </label>
+                        <div class="col-md-2">
+                            <input type="text" class="form-control " name="orderStartTime" id="starttimezhuzhuangtu"
+                            onclick="laydate({istime: true, format: 'YYYY-MM-DD'})"
+                            >
+                        </div>
+                        <div class="col-md-1" style="text-align: center">
+                            <h4>--</h4>
+                        </div>
+                        <div class="col-md-2">
+                            <input type="text" class="form-control " name="orderEndTime" id="endtimezhuzhuangtu"
+                            onclick="laydate({istime: true, format: 'YYYY-MM-DD'})"
+                            >
+                        </div>
+                        <button id="test6">查询</button>
+                        
+                    </div>
+                    <!-- <button class="xinzengbtn">新增柱状图</button>
+                    <div id="xinzeng">
+                        <h4>高压柱状图</h4>
+                        <div class="xinzenggaoya1"></div>
+                       
+                        <h4>低压柱状图</h4>
+                        <div class="xinzengdiya1"></div>
+                    </div> -->
+               <div id="oldmap">
+                <h4>高压柱状图</h4>
+                <div class="diyayichangzhu"></div>
+                <!-- <h4>高压柱状图</h4> -->
+                <h4>低压柱状图</h4>
+                <div class="gaoyazhu1"></div>
+                
+               </div>
+                
+             
+                </div>
+                <div class="tab-content-item echarts" id="zhuzhuangtuhuizong-echarts">
+                    <!-- <div id="test13">
+                        <label class="col-md-1 control-label left">查询时间: </label>
+                        <div class="col-md-2">
+                            <input type="text" class="form-control " name="orderStartTime" id="starttimezhuzhuangtuhuizong"
+                            onclick="laydate({istime: true, format: 'YYYY-MM-DD'})"
+                            >
+                        </div>
+                        <div class="col-md-1" style="text-align: center">
+                            <h4>--</h4>
+                        </div>
+                        <div class="col-md-2">
+                            <input type="text" class="form-control " name="orderEndTime" id="endtimezhuzhuangtuhuizong"
+                            onclick="laydate({istime: true, format: 'YYYY-MM-DD'})"
+                            >
+                        </div>
+                        <button id="huizong">查询</button>
+                        
+                    </div> -->
+                    <!-- <button class="xinzengbtn">新增柱状图</button>
+                    <div id="xinzeng">
+                        <h4>高压柱状图</h4>
+                        <div class="xinzenggaoya1"></div>
+                       
+                        <h4>低压柱状图</h4>
+                        <div class="xinzengdiya1"></div>
+                    </div> -->
+               <div id="oldmap">
+              
+                <h4>季度汇总高压图</h4>
+                <div class="jidugaoya"></div>
+                <h4>季度汇总低压图</h4>
+                <div class="jidudiya"></div>
+                <h4>年度汇总高压图</h4>
+                <div class="niandugaoya"></div>
+                <h4>年度汇总低压图</h4>
+                <div class="niandudiya"></div>
+               </div>
+                
+             
+                </div>
+                <div class="tab-content-item echarts " id="baifenbi-echarts">
+                    <div id="test17">
+                        <label class="col-md-1 control-label left">查询时间: </label>
+                        <div class="col-md-2">
+                            <input type="text" class="form-control " name="orderStartTime" id="starttime17"
+                            onclick="laydate({istime: true, format: 'YYYY-MM-DD'})"
+                            >
+                        </div>
+                        <!-- <div class="col-md-1" style="text-align: center">
+                            <h4>--</h4>
+                        </div> -->
+                        <!-- <div class="col-md-2">
+                            <input type="text" class="form-control datepickerTwo" name="orderEndTime" id="endtime17">
+                        </div> -->
+                        <button id="test8">查询</button>
+                        <!-- <button id="jest">跳转图形页面</button> -->
+                    </div>
+                    <table id="students-table" border="0" cellspacing="0" cellpadding="0" class="table table-bordered">
+                        <thead>
+                            <tr>
+                                <th>时间</th>
+                                <th>140≤高压＜145</th>
+                                <th>145≤高压＜150</th>
+                                <th>150≤高压＜160</th>
+                                <th>高压≥160</th>
+                                <th>90≤低压＜93</th>
+                                <th>93≤低压＜95</th>
+                                <th>低压≥95</th>
+                                <th>高压异常比</th>
+                                <th>低压异常比</th>
+                                <!-- <th>操作</th> -->
+
+                            </tr>
+                        </thead>
+                        <tbody id="table-body17"></tbody>
+                    </table>
+                    
+    
+                    <!-- 编辑弹出框 -->
+        
+               
+                </div>
+               
+                <!-- <div class="tab-content-item echarts show-list " id="yichangbaifenbi-echarts">
+                    <div id="test14">
+                        <label class="col-md-1 control-label left">查询时间: </label>
+                        <div class="col-md-2">
+                            <input type="text" class="form-control datepickerTwo" name="orderStartTime" id="starttimechaochuyichang">
+                        </div>
+                        <div class="col-md-1" style="text-align: center">
+                            <h4>--</h4>
+                        </div>
+                        <div class="col-md-2">
+                            <input type="text" class="form-control datepickerTwo" name="orderEndTime" id="endtimechaochuyichang">
+                        </div>
+                        <button id="test5">查询</button>
+                        
+                    </div>
+                      
+                   
+                    <h4 class="yincang3">高压超出百分比区间1</h4>
+                    <div class="gaoya1"></div>
+                    <h4 class="yincang3">高压超出百分比区间2</h4>
+                    <div class="gaoya2"></div>
+                    <h4 class="yincang3">高压超出百分比区间3</h4>
+                    <div class="gaoya3"></div>
+                    <h4 class="yincang3">高压超出百分比区间4</h4>
+                    <div class="gaoya4"></div>
+                 
+                    <h4 class="yincang3">低压超出百分比区间1</h4>
+                    <div class="diya1"></div>
+                    <h4 class="yincang3">低压超出百分比区间2</h4>
+                    <div class="diya2"></div>
+                    <h4 class="yincang3">低压超出百分比区间3</h4>
+                    <div class="diya3"></div>
+                   
+                    <h4 class="yincang3">异常比例高压(时间)</h4>
+                    <div class="gaoyayichang"></div>
+                    <h4 class="yincang3">异常比例低压(时间)</h4>
+                    <div class="diyayichang"></div>
+                
+                    <h4 class="yincang4">高压超出百分比区间140</h4>
+                    <div class="riqigaoya1"></div>
+                    <h4 class="yincang4">高压超出百分比区间145</h4>
+                    <div class="riqigaoya2"></div>
+                    <h4 class="yincang4">高压超出百分比区间150</h4>
+                    <div class="riqigaoya3"></div>
+                    <h4 class="yincang4">高压超出百分比区间160</h4>
+                    <div class="riqigaoya4"></div>
+                    <h4 class="yincang4">低压超出百分比图</h4>
+                    <h4 class="yincang4">低压超出百分比区间90</h4>
+                    <div class="riqidiya1"></div>
+                    <h4 class="yincang4">低压超出百分比区间93</h4>
+                    <div class="riqidiya2"></div>
+                    <h4 class="yincang4">低压超出百分比区间95</h4>
+                    <div class="riqidiya3"></div>
+                  
+                    <h4 class="yincang4">异常比例高压图(日期)</h4>
+                    <div class="riqigaoyayichang"></div>
+                    <h4 class="yincang4">异常比例低压图(日期)</h4>
+                    <div class="riqidiyayichang"></div>
+                </div> -->
+                <div class="tab-content-item echarts  " id="zaotu-echarts">
+                    <div id="test11">
+                        <label class="col-md-1 control-label left">查询时间: </label>
+                        <div class="col-md-2">
+                            <input type="text" class="form-control " name="orderStartTime" id="starttimezaowantu"
+                            onclick="laydate({istime: true, format: 'YYYY-MM-DD'})"
+                            >
+                        </div>
+                        <div class="col-md-1" style="text-align: center">
+                            <h4>--</h4>
+                        </div>
+                        <div class="col-md-2">
+                            <input type="text" class="form-control " name="orderEndTime" id="endtimezaowantu"
+                            onclick="laydate({istime: true, format: 'YYYY-MM-DD'})"
+                            >
+                        </div>
+                        <button id="test4">查询</button>
+                        
+                    </div>
+                    <!-- <h4  class="gaoyagao">高压最高</h4> -->
+                    
+                    <h4 class="yincang">早高压最大值</h4>
+                    <div class="zaowantugaoyazuida"></div>
+                    <h4 class="yincang">早高压最小值</h4>
+                    <div class="zaowantugaoyazuixiao"></div>
+                    <h4 class="yincang">早高压中间值</h4>
+                    <div class="zaowantugaoyazhongjian"></div>
+                    
+                    <h4 class="yincang">早低压最大值</h4>
+                    <div class="zaowantudiyazuida"></div>
+                    <h4 class="yincang">早低压最小值</h4>
+                    <div class="zaowantudiyazuixiao"></div>
+                    <h4 class="yincang">早低压中间值</h4>
+                    <div class="zaowantudiyazhongjian"></div>
+                  
+                    <h4 class="yincang">早心率最大值</h4>
+                    <div class="zaowantuxinlvzuida"></div>
+                    <h4 class="yincang">早心率最小值</h4>
+                    <div class="zaowantuxinlvzuixiao"></div>
+                    <h4 class="yincang">早心率中间值</h4>
+                    <div class="zaowantuxinlvzhongjian"></div>
+                    <!-- <h4 class="yincang">晚上图</h4>
+                    <h4 class="yincang">晚高压最大值</h4>
+                    <div class="zaowantugaoyazuidariqi"></div>
+                    <h4 class="yincang">晚高压最小值</h4>
+                    <div class="zaowantugaoyazuixiaoriqi"></div>
+                    <h4 class="yincang">晚高压中间值</h4>
+                    <div class="zaowantugaoyazhongjianriqi"></div>
+                  
+                    <h4 class="yincang">晚低压最大值</h4>
+                    <div class="zaowantudiyazuidariqi"></div>
+                    <h4 class="yincang">晚低压最小值</h4>
+                    <div class="zaowantudiyazuixiaoriqi"></div>
+                    <h4 class="yincang">晚低压中间值</h4>
+                    <div class="zaowantudiyazhongjianriqi"></div>
+                   
+                    <h4 class="yincang">晚心率最大值</h4>
+                    <div class="zaowantuxinlvzuidariqi"></div>
+                    <h4 class="yincang">晚心率最小值</h4>
+                    <div class="zaowantuxinlvzuixiaoriqi"></div>
+                    <h4 class="yincang">晚心率中间值</h4>
+                    <div class="zaowantuxinlvzhongjianriqi"></div> -->
+                </div>
+                <div class="tab-content-item echarts  " id="wantu-echarts">
+                    <div id="test11">
+                        <label class="col-md-1 control-label left">查询时间: </label>
+                        <div class="col-md-2">
+                            <input type="text" class="form-control " name="orderStartTime" id="starttimezaowantu"
+                            onclick="laydate({istime: true, format: 'YYYY-MM-DD'})"
+                            >
+                        </div>
+                        <div class="col-md-1" style="text-align: center">
+                            <h4>--</h4>
+                        </div>
+                        <div class="col-md-2">
+                            <input type="text" class="form-control " name="orderEndTime" id="endtimezaowantu"
+                            onclick="laydate({istime: true, format: 'YYYY-MM-DD'})"
+                            >
+                        </div>
+                        <button id="test7">查询</button>
+                        
+                    </div>
+                   
+                    
+                    
+                    <h4 class="yincang">晚高压最大值</h4>
+                    <div class="zaowantugaoyazuidariqi"></div>
+                    <h4 class="yincang">晚高压最小值</h4>
+                    <div class="zaowantugaoyazuixiaoriqi"></div>
+                    <h4 class="yincang">晚高压中间值</h4>
+                    <div class="zaowantugaoyazhongjianriqi"></div>
+                  
+                    <h4 class="yincang">晚低压最大值</h4>
+                    <div class="zaowantudiyazuidariqi"></div>
+                    <h4 class="yincang">晚低压最小值</h4>
+                    <div class="zaowantudiyazuixiaoriqi"></div>
+                    <h4 class="yincang">晚低压中间值</h4>
+                    <div class="zaowantudiyazhongjianriqi"></div>
+                   
+                    <h4 class="yincang">晚心率最大值</h4>
+                    <div class="zaowantuxinlvzuidariqi"></div>
+                    <h4 class="yincang">晚心率最小值</h4>
+                    <div class="zaowantuxinlvzuixiaoriqi"></div>
+                    <h4 class="yincang">晚心率中间值</h4>
+                    <div class="zaowantuxinlvzhongjianriqi"></div>
+                </div>
+                <div class="tab-content-item echarts " id="student-echarts">
+                    <div id="test16">
+                        <label class="col-md-1 control-label left">查询时间: </label>
+                        <div class="col-md-2">
+                            <input type="text" class="form-control " name="orderStartTime" id="starttime100"
+                            onclick="laydate({istime: true, format: 'YYYY-MM-DD'})"
+                            >
+                        </div>
+                        <div class="col-md-1" style="text-align: center">
+                            <h4>--</h4>
+                        </div>
+                        <div class="col-md-2">
+                            <input type="text" class="form-control " name="orderEndTime" id="endtime100"
+                            onclick="laydate({istime: true, format: 'YYYY-MM-DD'})"
+                            >
+                        </div>
+                        <button id="test2">查询</button>
+                        
+                    </div>
+                    <!-- <h4  class="gaoyagao">高压最高</h4> -->
+                   
+                    <h4 class="yincang">高压最大值</h4>
+                    <div class="area"></div>
+                    <h4 class="yincang">高压最小值</h4>
+                    <div class="gaoyadi"></div>
+                    <h4 class="yincang">高压中间值</h4>
+                    <div class="pingjungao"></div>
+                  
+                    <h4 class="yincang">低压最大值</h4>
+                    <div class="zuidadi"></div>
+                    <h4 class="yincang">低压最小值</h4>
+                    <div class="zuixiaodi"></div>
+                    <h4 class="yincang">低压中间值</h4>
+                    <div class="pingjundi"></div>
+                   
+                    <h4 class="yincang">心率最大值</h4>
+                    <div class="xinlvgao"></div>
+                    <h4 class="yincang">心率最小值</h4>
+                    <div class="xinlvdi"></div>
+                    <h4 class="yincang">心率中间值</h4>
+                    <div class="xinlvpingjun"></div>
+                    
+                    <!-- <h4 class="yincang1">高压最大值(日期)</h4>
+                    <div class="danxiangtugaoyazuida"></div>
+                    <h4 class="yincang1">高压最小值(日期)</h4>
+                    <div class="danxiangtugaoyazuixiao"></div>
+                    <h4 class="yincang1">高压中间值(日期)</h4>
+                    <div class="danxiangtugaoyazhongjian"></div>
+                    
+                    <h4 class="yincang1">低压最大值(日期)</h4>
+                    <div class="danxiangtudiyazuida"></div>
+                    <h4 class="yincang1">低压最小值(日期)</h4>
+                    <div class="danxiangtudiyazuixiao"></div>
+                    <h4 class="yincang1">低压中间值(日期)</h4>
+                    <div class="danxiangtudiyazhongjian"></div>
+                  
+                    <h4 class="yincang1">心率最大值(日期)</h4>
+                    <div class="danxiangtuxinlvzuida"></div>
+                    <h4 class="yincang1">心率最小值(日期)</h4>
+                    <div class="danxiangtuxinlvzuixiao"></div>
+                    <h4 class="yincang1">心率中间值(日期)</h4>
+                    <div class="danxiangtuxinlvzhongjian"></div> -->
+                   
+                 
+                    
+                
+                </div>
+        </div>
+    </div>
+    <script src="./jquery-3.3.1.js"></script>
+    <script src="./echarts.js"></script>
+    <script src="./turnPage/index.js"></script>
+    <script src="./index.js"></script>
+    
+    
+    <script src="./pie.js"></script>
+    
+    <script type="text/javascript" src='./laydate.js'></script>
+    <!-- <script type="text/javascript" src='./jedate.min.js'></script> -->
+    <script src="./jquery.table2excel.js"> </script>
+   
+</body>
+
+</html>
